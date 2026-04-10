@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Gallery | Pinhole Coffee Experience</title>
+    
+    <link rel="icon" type="image/jpeg" href="images/logo.jpeg">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* ==========================================================================
+           PREMIUM ETHEREAL GALLERY - STABILITY PRO MAX (2026)
+           ========================================================================== */
+        :root {
+            --bg-deep: #08080C;
+            --primary-ethereal: #A78BFA;
+            --accent-shine: #FBBF24;
+            --text-light: #F9FAFB;
+            --border-subtle: rgba(255, 255, 255, 0.1);
+        }
+
+        html, body.gallery-page {
+            background-color: var(--bg-deep);
+            color: var(--text-light);
+            margin: 0; padding: 0;
+            width: 100%;
+            overflow-x: hidden; 
+            position: relative;
+            font-family: 'Poppins', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* --- BACK BUTTON --- */
+        .back-btn {
+            position: absolute !important;
+            top: 130px !important;
+            left: 30px !important;
+            z-index: 1000 !important;
+            background: rgba(10, 10, 10, 0.6);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 12px 24px;
+            border-radius: 40px;
+            border: 1px solid var(--border-subtle);
+            text-decoration: none;
+            color: #fff;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            transition: 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+        .back-btn:hover { background: var(--accent-shine); color: #000; transform: translateX(-5px); }
+
+        /* --- HERO SECTION --- */
+        .gallery-hero {
+            height: 70vh;
+            display: flex;
+            align-items: center; justify-content: center;
+            text-align: center; position: relative; overflow: hidden;
+        }
+        .hero-slideshow { position: absolute; inset: 0; z-index: 1; }
+        .hero-slide {
+            position: absolute; inset: 0; opacity: 0;
+            background-size: cover; background-position: center;
+            animation: slideShowSequence 24s linear infinite;
+        }
+        @keyframes slideShowSequence {
+            0%, 100% { opacity: 0; transform: scale(1.1); }
+            5%, 25% { opacity: 1; transform: scale(1); }
+            30% { opacity: 0; }
+        }
+        .hero-slide:nth-child(1) { background-image: linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1497935586351-b67a49e012bf?q=80&w=1920'); animation-delay: 0s; }
+        .hero-slide:nth-child(2) { background-image: linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1554118811-1e0d58224f24?q=80&w=1920'); animation-delay: 6s; }
+        .hero-slide:nth-child(3) { background-image: linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1442512595331-e89e73853f31?q=80&w=1920'); animation-delay: 12s; }
+        .hero-slide:nth-child(4) { background-image: linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1511920170033-f8396924c348?q=80&w=1920'); animation-delay: 18s; }
+
+        .hero-content { position: relative; z-index: 10; color: #fff; }
+        .hero-content h1 { font-size: clamp(3rem, 10vw, 6rem); font-family: 'Playfair Display', serif; }
+        .hero-content h1 span { color: var(--accent-shine); font-style: italic; }
+
+        /* --- HORIZONTAL MARQUEE (B&W Effect Added) --- */
+        .horizontal-marquee { background: #0A0A0F; padding: 40px 0; overflow: hidden; border-bottom: 1px solid var(--border-subtle); }
+        .marquee-track { display: flex; gap: 20px; width: max-content; animation: scrollH 40s linear infinite; }
+        @keyframes scrollH { 100% { transform: translate3d(-50%, 0, 0); } }
+        .marquee-item { 
+            width: 350px; height: 240px; border-radius: 20px; overflow: hidden; flex-shrink: 0; 
+            border: 1px solid var(--border-subtle); transition: 1s ease;
+            filter: grayscale(100%) brightness(0.6); /* Start B&W */
+        }
+        .marquee-item.in-view { filter: grayscale(0%) brightness(1); } /* Scroll to Color */
+        .marquee-item img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* --- FLOATING GRID & B&W EFFECTS --- */
+        .premium-bubble-gallery { padding: 80px 0; position: relative; }
+        .floating-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 40px; padding: 40px 25px; position: relative; z-index: 5;
+        }
+
+        .bubble-card {
+            position: relative;
+            animation: bubblePhysics 8s ease-in-out infinite alternate;
+            will-change: transform;
+        }
+        @keyframes bubblePhysics { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(0, -20px, 0); } }
+
+        .bubble-inner {
+            width: 100%; aspect-ratio: 1/1; border-radius: 50%; overflow: hidden;
+            cursor: pointer; border: 1px solid var(--border-subtle);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5); background: #111;
+            transition: 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+            position: relative;
+        }
+
+        /* Black & White to Color logic */
+        .bubble-inner img { 
+            width: 100%; height: 100%; object-fit: cover; 
+            filter: grayscale(100%) brightness(0.7); 
+            transition: 1.2s cubic-bezier(0.19, 1, 0.22, 1);
+            transform: scale(1.1);
+        }
+        .bubble-card.in-view .bubble-inner img { filter: grayscale(0%) brightness(1); transform: scale(1); }
+
+        /* INFO OVERLAY */
+        .bubble-overlay {
+            position: absolute; inset: 0; background: rgba(0,0,0,0.6);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            opacity: 0; transition: 0.4s; padding: 20px; text-align: center;
+            backdrop-filter: blur(4px);
+        }
+        .bubble-inner:hover .bubble-overlay { opacity: 1; }
+        .bubble-overlay h3 { color: var(--accent-shine); font-family: 'Playfair Display'; font-size: 1.5rem; margin: 0; transform: translateY(10px); transition: 0.4s; }
+        .bubble-overlay p { color: #fff; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; margin-top: 8px; transform: translateY(10px); transition: 0.5s; }
+        .bubble-inner:hover h3, .bubble-inner:hover p { transform: translateY(0); }
+
+        /* FILTERS */
+        .gallery-filters { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin-bottom: 50px; }
+        .filter-btn { 
+            background: rgba(255,255,255,0.05); border: 1px solid var(--border-subtle); 
+            color: #888; padding: 12px 28px; border-radius: 40px; cursor: pointer; transition: 0.3s;
+            font-weight: 500; font-size: 0.9rem;
+        }
+        .filter-btn.active, .filter-btn:hover { background: var(--primary-ethereal); color: #000; border-color: var(--primary-ethereal); }
+
+        /* LIGHTBOX FIX (ANTI-HANG) */
+        .lightbox {
+            display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.98);
+            z-index: 100000; justify-content: center; align-items: center;
+            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+        }
+        .lightbox.active { display: flex !important; }
+        .lightbox-img { max-width: 90%; max-height: 80vh; object-fit: contain; border-radius: 10px; }
+        .close-lightbox { position: absolute; top: 20px; right: 30px; color: #fff; font-size: 50px; cursor: pointer; line-height: 1; }
+
+        /* MOBILE OPTIMIZATION */
+        @media (max-width: 768px) {
+            .back-btn { top: 110px !important; left: 20px !important; font-size: 0.7rem; padding: 8px 16px; }
+            .gallery-hero h1 { font-size: 3rem; }
+            .floating-grid { grid-template-columns: 1fr 1fr; gap: 15px; padding: 20px 10px; }
+            
+            /* PERFORMANCE: Disable physics & high filters on mobile to stop hanging */
+            .bubble-card { animation: none !important; transform: none !important; }
+            .bubble-inner { border-radius: 20px; } 
+            .bubble-inner img { filter: none !important; transform: none !important; }
+            .marquee-item { width: 260px; height: 160px; filter: none !important; }
+            .close-lightbox { top: 15px; right: 20px; font-size: 40px; }
+        }
+
+        /* AUTO-PAUSE ANIMATIONS */
+        body.modal-open .bubble-card, 
+        body.modal-open .hero-slide, 
+        body.modal-open .marquee-track {
+            animation-play-state: paused !important;
+        }
+    </style>
+</head>
+
+<body class="gallery-page">
+
+    <header id="navbar" class="scrolled">
+        <div class="nav-container">
+            <a href="index.html" class="logo">Pinhole<span>Coffee</span></a>
+            <nav class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="gallery.html" class="active">Gallery</a>
+                <a href="index.html#contact">Contact</a>
+            </nav>
+            <div class="cart-wrapper"><i class="fa-solid fa-bag-shopping"></i><span class="cart-count">0</span></div>
+        </div>
+    </header>
+
+    <section class="gallery-hero">
+        <a href="index.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i> Return to Cafe</a>
+        <div class="hero-slideshow">
+            <div class="hero-slide"></div><div class="hero-slide"></div>
+            <div class="hero-slide"></div><div class="hero-slide"></div>
+        </div>
+        <div class="hero-overlay"></div>
+        <div class="container">
+            <div class="hero-content">
+                <h1>The <span>Gallery</span></h1>
+                <p>Capturing the warmth and flavor of Bernal Heights.</p>
+            </div>
+        </div>
+    </section>
+
+    <div class="horizontal-marquee">
+        <div class="marquee-track">
+            <div class="marquee-item"><img src="images/coffee 1.jpeg"></div>
+            <div class="marquee-item"><img src="images/donut 1.jpeg"></div>
+            <div class="marquee-item"><img src="images/interior 1.jpeg"></div>
+            <div class="marquee-item"><img src="images/coffee 3.jpeg"></div>
+            <div class="marquee-item"><img src="images/coffee 2.jpeg"></div>
+            <div class="marquee-item"><img src="images/donut 2.jpeg"></div>
+            <div class="marquee-item"><img src="images/interior 2.jpeg"></div>
+            <div class="marquee-item"><img src="images/interior 3.jpeg"></div>
+            <div class="marquee-item"><img src="images/interior 4.jpeg"></div>
+            <div class="marquee-item"><img src="images/coffee 1.jpeg"></div>
+            <div class="marquee-item"><img src="images/donut 1.jpeg"></div>
+            <div class="marquee-item"><img src="images/interior 1.jpeg"></div>
+        </div>
+    </div>
+
+    <section class="premium-bubble-gallery">
+        <div class="container">
+            <div class="gallery-filters">
+                <button class="filter-btn active" data-filter="all">Show All</button>
+                <button class="filter-btn" data-filter="coffee">Coffee</button>
+                <button class="filter-btn" data-filter="donut">Donuts</button>
+                <button class="filter-btn" data-filter="pestry">Pastries</button>
+                <button class="filter-btn" data-filter="interior">Interior</button>
+            </div>
+
+            <div class="floating-grid" id="grid">
+                
+                <div class="bubble-card coffee"><div class="bubble-inner"><img src="images/coffee 1.jpeg"><div class="bubble-overlay"><h3>Premium Roast</h3><p>Category: Coffee</p></div></div></div>
+                <div class="bubble-card coffee"><div class="bubble-inner"><img src="images/coffee 2.jpeg"><div class="bubble-overlay"><h3>Morning Ritual</h3><p>Category: Coffee</p></div></div></div>
+                <div class="bubble-card coffee"><div class="bubble-inner"><img src="images/coffee 3.jpeg"><div class="bubble-overlay"><h3>Barista Choice</h3><p>Category: Coffee</p></div></div></div>
+                <div class="bubble-card coffee"><div class="bubble-inner"><img src="images/coffee 4.jpeg"><div class="bubble-overlay"><h3>Smooth Espresso</h3><p>Category: Coffee</p></div></div></div>
+                <div class="bubble-card coffee"><div class="bubble-inner"><img src="images/coffee 5.jpeg"><div class="bubble-overlay"><h3>Artisan Latte</h3><p>Category: Coffee</p></div></div></div>
+                <div class="bubble-card coffee"><div class="bubble-inner"><img src="images/coffee 6.jpeg"><div class="bubble-overlay"><h3>Nitro Brew</h3><p>Category: Coffee</p></div></div></div>
+                <div class="bubble-card coffee"><div class="bubble-inner"><img src="images/coffee 7.jpeg"><div class="bubble-overlay"><h3>Flat White</h3><p>Category: Coffee</p></div></div></div>
+                <div class="bubble-card coffee"><div class="bubble-inner"><img src="images/logo.jpeg"><div class="bubble-overlay"><h3>Mocha Magic</h3><p>Category: Coffee</p></div></div></div>
+
+                <div class="bubble-card donut"><div class="bubble-inner"><img src="images/donut 1.jpeg"><div class="bubble-overlay"><h3>Mochi Bliss</h3><p>Category: Donuts</p></div></div></div>
+                <div class="bubble-card donut"><div class="bubble-inner"><img src="images/donut 2.jpeg"><div class="bubble-overlay"><h3>Honey Glaze</h3><p>Category: Donuts</p></div></div></div>
+                <div class="bubble-card donut"><div class="bubble-inner"><img src="images/donut 3.jpeg"><div class="bubble-overlay"><h3>Matcha Green</h3><p>Category: Donuts</p></div></div></div>
+                <div class="bubble-card donut"><div class="bubble-inner"><img src="images/donut 4.jpeg"><div class="bubble-overlay"><h3>Berry Filled</h3><p>Category: Donuts</p></div></div></div>
+                <div class="bubble-card donut"><div class="bubble-inner"><img src="images/cup.jpeg"><div class="bubble-overlay"><h3>Chocolate Dip</h3><p>Category: Donuts</p></div></div></div>
+                <div class="bubble-card donut"><div class="bubble-inner"><img src="images/tea.jpeg"><div class="bubble-overlay"><h3>Sprinkle Joy</h3><p>Category: Donuts</p></div></div></div>
+                <div class="bubble-card donut"><div class="bubble-inner"><img src="images/sky.jpeg"><div class="bubble-overlay"><h3>Classic Sugar</h3><p>Category: Donuts</p></div></div></div>
+                <div class="bubble-card donut"><div class="bubble-inner"><img src="images/details 4.jpeg"><div class="bubble-overlay"><h3>Cinnamon Dust</h3><p>Category: Donuts</p></div></div></div>
+
+                <div class="bubble-card pestry"><div class="bubble-inner"><img src="images/pestry 1.jpeg"><div class="bubble-overlay"><h3>Golden Crust</h3><p>Category: Pastry</p></div></div></div>
+                <div class="bubble-card pestry"><div class="bubble-inner"><img src="images/pestry 2.jpeg"><div class="bubble-overlay"><h3>Butter Croissant</h3><p>Category: Pastry</p></div></div></div>
+                <div class="bubble-card pestry"><div class="bubble-inner"><img src="images/pestry 3.jpeg"><div class="bubble-overlay"><h3>Almond Flaky</h3><p>Category: Pastry</p></div></div></div>
+                <div class="bubble-card pestry"><div class="bubble-inner"><img src="images/pestry 4.jpeg"><div class="bubble-overlay"><h3>Pain au Chocolat</h3><p>Category: Pastry</p></div></div></div>
+                <div class="bubble-card pestry"><div class="bubble-inner"><img src="images/details 3.jpeg"><div class="bubble-overlay"><h3>Fruit Danish</h3><p>Category: Pastry</p></div></div></div>
+                <div class="bubble-card pestry"><div class="bubble-inner"><img src="images/details 2.jpeg"><div class="bubble-overlay"><h3>Savory Scone</h3><p>Category: Pastry</p></div></div></div>
+                <div class="bubble-card pestry"><div class="bubble-inner"><img src="images/details 1.jpeg"><div class="bubble-overlay"><h3>Blueberry Muffin</h3><p>Category: Pastry</p></div></div></div>
+                <div class="bubble-card pestry"><div class="bubble-inner"><img src="images/drink.jpeg"><div class="bubble-overlay"><h3>Morning Bun</h3><p>Category: Pastry</p></div></div></div>
+
+                <div class="bubble-card interior"><div class="bubble-inner"><img src="images/interior 1.jpeg"><div class="bubble-overlay"><h3>Cozy Corners</h3><p>Category: Interior</p></div></div></div>
+                <div class="bubble-card interior"><div class="bubble-inner"><img src="images/interior 2.jpeg"><div class="bubble-overlay"><h3>Sunlit Seating</h3><p>Category: Interior</p></div></div></div>
+                <div class="bubble-card interior"><div class="bubble-inner"><img src="images/interior 3.jpeg"><div class="bubble-overlay"><h3>Barista Bar</h3><p>Category: Interior</p></div></div></div>
+                <div class="bubble-card interior"><div class="bubble-inner"><img src="images/interior 4.jpeg"><div class="bubble-overlay"><h3>Bernal Vibe</h3><p>Category: Interior</p></div></div></div>
+                <div class="bubble-card interior"><div class="bubble-inner"><img src="images/interior 5.jpeg"><div class="bubble-overlay"><h3>Reading Nook</h3><p>Category: Interior</p></div></div></div>
+                <div class="bubble-card interior"><div class="bubble-inner"><img src="images/interior 6.jpeg"><div class="bubble-overlay"><h3>Community</h3><p>Category: Interior</p></div></div></div>
+
+            </div>
+        </div>
+    </section>
+
+    <div id="lightbox" class="lightbox">
+        <span class="close-lightbox">&times;</span>
+        <img class="lightbox-img" id="lightbox-img">
+    </div>
+
+    <script>
+        // 1. SCROLL OBSERVER (B&W to Color Logic)
+        const scrollObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('in-view');
+                }
+            });
+        }, { threshold: 0.25 });
+
+        // Apply to grid cards and marquee items
+        document.querySelectorAll('.bubble-card, .marquee-item').forEach(el => scrollObserver.observe(el));
+
+        // 2. LIGHTBOX & ANTI-HANG LOGIC
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const closeBtn = document.querySelector('.close-lightbox');
+
+        document.querySelectorAll('.bubble-inner').forEach(card => {
+            card.onclick = function() {
+                lightboxImg.src = this.querySelector('img').src;
+                lightbox.classList.add('active');
+                document.body.classList.add('modal-open'); // Stops background animations to prevent hang
+                document.body.style.overflow = 'hidden'; 
+            };
+        });
+
+        const closeGallery = () => {
+            lightbox.classList.remove('active');
+            document.body.classList.remove('modal-open'); // Restarts animations
+            document.body.style.overflow = 'auto';
+        };
+
+        closeBtn.onclick = closeGallery;
+        lightbox.onclick = (e) => { if (e.target !== lightboxImg) closeGallery(); };
+
+        // 3. FILTER LOGIC
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.onclick = () => {
+                document.querySelector('.filter-btn.active').classList.remove('active');
+                btn.classList.add('active');
+                const filter = btn.dataset.filter;
+                document.querySelectorAll('.bubble-card').forEach(card => {
+                    card.style.display = (filter === 'all' || card.classList.contains(filter)) ? 'block' : 'none';
+                });
+            };
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pinhole Coffee | Premium Café Experience</title>
+    <link rel="icon" type="image/png" href="images/logo.png">
+    <head>
+    <link rel="icon" type="image/jpeg" href="images/logo.jpeg">
+
+    <link rel="apple-touch-icon" href="images/logo.jpeg">
+
+    <link rel="icon" type="image/jpeg" sizes="32x32" href="images/logo.jpeg">
+</head>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="cart-sidebar" class="cart-sidebar">
+        <div class="cart-header">
+            <h3>Your Order</h3>
+            <button id="close-cart"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div id="cart-items" class="cart-items-container">
+            <p class="empty-msg">Your bag is empty.</p>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total:</span>
+                <span id="cart-total-amount">$0.00</span>
+            </div>
+            <button class="btn btn-primary w-100">Checkout Now</button>
+        </div>
+    </div>
+    <div id="cart-overlay" class="cart-overlay"></div>
+
+    <header id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img src="images/logo.jpeg"  class="nav-logo-img">
+                Pinhole<span>Coffee</span>
+            </a>
+            
+            <div class="nav-right">
+                <nav class="nav-links">
+    <a href="#home">Home</a>
+    <a href="#menu">Menu</a>
+    <a href="#about">About</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="shop.html" style="color: var(--orange); font-weight: 700;">Shop</a> 
+    <a href="#reviews">Reviews</a> 
+    <a href="#contact">Contact</a>
+</nav>
+                <div class="nav-right">
+                <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Dark Mode">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+
+                <div class="cart-wrapper" id="cart-trigger">
+                    <i class="fa-solid fa-bag-shopping"></i>
+                    <span class="cart-count">0</span>
+                </div>
+
+                <div class="hamburger">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="hero-slideshow">
+            <div class="hero-slide" style="background-image: url('images/interior\ 2.jpeg');"></div>
+            <div class="hero-slide" style="background-image: url('images/interior\ 4.jpeg');"></div>
+            <div class="hero-slide" style="background-image: url('images/interior\ 5.jpeg');"></div>
+            
+        </div>
+
+        <div class="hero-overlay"></div>
+        
+        <div class="hero-content reveal">
+            <h1>Brewed with Love in Every Cup</h1>
+            <p>Specialty coffee & cozy vibes in Bernal Heights</p>
+            <div class="hero-btns">
+                <a href="#menu" class="btn btn-primary">Explore Menu</a>
+                <a href="shop.html" class="btn btn-secondary">Shop Beans & Merch</a>
+                <a href="#contact" class="btn btn-secondary">Visit Us</a>
+            </div>
+        </div>
+    </section>
+
+    <div class="peak-banner reveal">
+        <p><i class="fa-solid fa-clock"></i> Busy between 8 AM – 11 AM, consider takeaway.</p>
+        <a href="#contact" class="btn-text">Order Takeaway →</a>
+    </div>
+
+  <section id="menu" class="premium-menu-section bg-cream">
+    <div class="container">
+        
+        <div class="menu-header reveal">
+            <span class="menu-badge">Hand-Crafted Selections</span>
+            <h2>Our Full Menu</h2>
+            <p>Every bean is roasted to perfection; every pastry is baked with soul.</p>
+        </div>
+
+        <div class="menu-grid">
+            
+            <div class="menu-card reveal delay-1">
+                <div class="menu-img-box">
+                    <img src="images/coffee 1.jpeg" alt="Signature Cortado">
+                </div>
+                <div class="menu-card-content">
+                    <div class="menu-info">
+                        <h3>Signature Cortado</h3>
+                        <p>Equal parts espresso and steamed milk for a perfectly balanced flavor.</p>
+                    </div>
+                    <div class="menu-action-row">
+                        <span class="menu-price">$4.50</span>
+                        <button class="btn-add-cart" onclick="updateCartCount()">
+                            <i class="fa-solid fa-plus"></i> Add
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-card reveal delay-2">
+                <div class="menu-img-box">
+                    <img src="images/coffee 2.jpeg" alt="Pour Over">
+                </div>
+                <div class="menu-card-content">
+                    <div class="menu-info">
+                        <h3>Single-Origin Pour Over</h3>
+                        <p>Hand-poured filter coffee highlighting bright, floral notes.</p>
+                    </div>
+                    <div class="menu-action-row">
+                        <span class="menu-price">$5.50</span>
+                        <button class="btn-add-cart" onclick="updateCartCount()">
+                            <i class="fa-solid fa-plus"></i> Add
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-card reveal delay-3">
+                <div class="menu-img-box">
+                    <img src="images/donut 1.jpeg" alt="Matcha Mochi Donut">
+                </div>
+                <div class="menu-card-content">
+                    <div class="menu-info">
+                        <h3>Matcha Mochi Donut</h3>
+                        <p>Our famous chewy mochi donut glazed with premium Japanese matcha.</p>
+                    </div>
+                    <div class="menu-action-row">
+                        <span class="menu-price">$3.75</span>
+                        <button class="btn-add-cart" onclick="updateCartCount()">
+                            <i class="fa-solid fa-plus"></i> Add
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-card reveal delay-4">
+                <div class="menu-img-box">
+                    <img src="images/pestry 1.jpeg" alt="Butter Croissant">
+                </div>
+                <div class="menu-card-content">
+                    <div class="menu-info">
+                        <h3>Golden Croissant</h3>
+                        <p>Flaky, buttery layers baked fresh every morning at 5 AM.</p>
+                    </div>
+                    <div class="menu-action-row">
+                        <span class="menu-price">$4.25</span>
+                        <button class="btn-add-cart" onclick="updateCartCount()">
+                            <i class="fa-solid fa-plus"></i> Add
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-card reveal">
+                <div class="menu-img-box">
+                    <img src="images/coffee 4.jpeg" alt="Flat White">
+                </div>
+                <div class="menu-card-content">
+                    <div class="menu-info">
+                        <h3>Velvety Flat White</h3>
+                        <p>Micro-foam poured over a double ristretto shot for a silky finish.</p>
+                    </div>
+                    <div class="menu-action-row">
+                        <span class="menu-price">$4.75</span>
+                        <button class="btn-add-cart" onclick="updateCartCount()">
+                            <i class="fa-solid fa-plus"></i> Add
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-card reveal">
+                <div class="menu-img-box">
+                    <img src="images/pestry 3.jpeg" alt="Almond Croissant">
+                </div>
+                <div class="menu-card-content">
+                    <div class="menu-info">
+                        <h3>Almond Frangipane</h3>
+                        <p>Twice-baked croissant filled with rich almond cream and topped with flakes.</p>
+                    </div>
+                    <div class="menu-action-row">
+                        <span class="menu-price">$5.00</span>
+                        <button class="btn-add-cart" onclick="updateCartCount()">
+                            <i class="fa-solid fa-plus"></i> Add
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-card reveal">
+                <div class="menu-img-box">
+                    <img src="images/coffee 5.jpeg" alt="Cold Brew">
+                </div>
+                <div class="menu-card-content">
+                    <div class="menu-info">
+                        <h3>18-Hour Cold Brew</h3>
+                        <p>Steeped slowly for a low-acid, naturally sweet, and high-caffeine kick.</p>
+                    </div>
+                    <div class="menu-action-row">
+                        <span class="menu-price">$5.25</span>
+                        <button class="btn-add-cart" onclick="updateCartCount()">
+                            <i class="fa-solid fa-plus"></i> Add
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-card reveal">
+                <div class="menu-img-box">
+                    <img src="images/donut 2.jpeg" alt="Glazed Donut">
+                </div>
+                <div class="menu-card-content">
+                    <div class="menu-info">
+                        <h3>Honey Glazed Donut</h3>
+                        <p>Traditional mochi-style donut with a light, floral honey coating.</p>
+                    </div>
+                    <div class="menu-action-row">
+                        <span class="menu-price">$3.50</span>
+                        <button class="btn-add-cart" onclick="updateCartCount()">
+                            <i class="fa-solid fa-plus"></i> Add
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-card reveal">
+                <div class="menu-img-box">
+                    <img src="images/pestry 2.jpeg" alt="Chocolate Muffin">
+                </div>
+                <div class="menu-card-content">
+                    <div class="menu-info">
+                        <h3>Double Choco Muffin</h3>
+                        <p>Rich cocoa batter packed with 70% dark chocolate chunks.</p>
+                    </div>
+                    <div class="menu-action-row">
+                        <span class="menu-price">$4.00</span>
+                        <button class="btn-add-cart" onclick="updateCartCount()">
+                            <i class="fa-solid fa-plus"></i> Add
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-card reveal">
+                <div class="menu-img-box">
+                    <img src="images/coffee 6.jpeg" alt="Espresso Tonic">
+                </div>
+                <div class="menu-card-content">
+                    <div class="menu-info">
+                        <h3>Espresso Tonic</h3>
+                        <p>A refreshing fizz of premium tonic water with a double shot of espresso.</p>
+                    </div>
+                    <div class="menu-action-row">
+                        <span class="menu-price">$6.00</span>
+                        <button class="btn-add-cart" onclick="updateCartCount()">
+                            <i class="fa-solid fa-plus"></i> Add
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-card reveal">
+                <div class="menu-img-box">
+                    <img src="images/drink.jpeg" alt="Blueberry Scone">
+                </div>
+                <div class="menu-card-content">
+                    <div class="menu-info">
+                        <h3>Blueberry Lemon Scone</h3>
+                        <p>Crumbly, buttery scone bursting with fresh blueberries and lemon zest.</p>
+                    </div>
+                    <div class="menu-action-row">
+                        <span class="menu-price">$3.95</span>
+                        <button class="btn-add-cart" onclick="updateCartCount()">
+                            <i class="fa-solid fa-plus"></i> Add
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-card reveal">
+                <div class="menu-img-box">
+                    <img src="images/pestry 1.jpeg" alt="Afternoon Combo">
+                </div>
+                <div class="menu-card-content">
+                    <div class="menu-info">
+                        <h3>Bernal Vibe Combo</h3>
+                        <p>A double espresso and a pastry of your choice. Best enjoyed in-store.</p>
+                    </div>
+                    <div class="menu-action-row">
+                        <span class="menu-price">$8.50</span>
+                        <button class="btn-add-cart" onclick="updateCartCount()">
+                            <i class="fa-solid fa-plus"></i> Add
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+ <section id="about" class="aperture-mosaic">
+    <div class="lens-flare"></div> <div class="container">
+        <div class="mosaic-header reveal">
+            <span class="aperture-tag">Focus: Bernal Heights</span>
+            <h2 class="mosaic-title">Developing <br> <span class="italic-serif">The Vision</span></h2>
+        </div>
+
+        <div class="mosaic-grid">
+            
+            <div class="mosaic-item core-identity reveal">
+                <div class="glass-card">
+                    <span class="card-num">01</span>
+                    <h3>Pillars of Pinhole</h3>
+                    <p>We are a <strong>Women-owned, Asian-owned, and LGBTQ+ owned</strong> heartbeat. Our whimsical, cozy space is designed to be the "light source" for the community.</p>
+                    <div class="identity-badges">
+                        <span>Inclusive</span>
+                        <span>Whimsical</span>
+                        <span>Friendly</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mosaic-item bean-visual reveal delay-1">
+                <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=800&q=80" alt="Specialty Coffee">
+                <div class="overlay-tag">Sourced from Linea Caffe</div>
+            </div>
+
+            <div class="mosaic-item history-block reveal delay-2">
+                <div class="glass-card">
+                    <span class="card-num">02</span>
+                    <h3>140 Years in the Making</h3>
+                    <p>Built in the <strong>1880s</strong>, our corner was originally Max Breithaupt's butcher shop. We trade in heritage, preserving the local soul while brewing the city's finest espresso.</p>
+                </div>
+            </div>
+
+            <div class="mosaic-item metaphor-block reveal">
+                <div class="lens-ring">
+                    <div class="lens-text">
+                        <h4>The Pinhole Theory</h4>
+                        <p>A tiny hole produces a massive image. We are that small space reflecting the massive light of San Francisco.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mosaic-item mobile-highlight reveal">
+                <div class="mobile-flex">
+                    <div class="m-img">
+                        <img src="https://images.unsplash.com/photo-1525193612562-0ec53b0e5d7c?auto=format&fit=crop&w=600&q=80" alt="Mobile Cafe">
+                    </div>
+                    <div class="m-text">
+                        <span class="status-pill">On Wheels</span>
+                        <h4>Pinholita</h4>
+                        <p>Our battery-powered café, currently manifesting vibes in Ojai, CA.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div> </div>
+</section>
+
+    <section id="features" class="bubble-features-section">
+    
+    <div class="bg-bubble b-1"></div>
+    <div class="bg-bubble b-2"></div>
+    <div class="bg-bubble b-3"></div>
+
+    <div class="container relative-container">
+        
+        <div class="features-header reveal">
+            <h2>The Pinhole Experience</h2>
+            <p>What makes our community special.</p>
+        </div>
+
+        <div class="bubble-orbit-container reveal delay-1">
+            
+            <div class="core-bubble">
+                <i class="fa-solid fa-mug-hot"></i>
+                <span>Pinhole<br>Coffee</span>
+            </div>
+
+            <div class="orbit-track">
+                
+                <div class="feature-bubble fb-1">
+                    <div class="bubble-content">
+                        <i class="fa-solid fa-award"></i>
+                        <span>Quality</span>
+                    </div>
+                </div>
+
+                <div class="feature-bubble fb-2">
+                    <div class="bubble-content">
+                        <i class="fa-solid fa-face-smile"></i>
+                        <span>Friendly</span>
+                    </div>
+                </div>
+
+                <div class="feature-bubble fb-3">
+                    <div class="bubble-content">
+                        <i class="fa-solid fa-couch"></i>
+                        <span>Cozy</span>
+                    </div>
+                </div>
+
+                <div class="feature-bubble fb-4">
+                    <div class="bubble-content">
+                        <i class="fa-solid fa-wifi"></i>
+                        <span>WiFi</span>
+                    </div>
+                </div>
+
+                <div class="feature-bubble fb-5">
+                    <div class="bubble-content">
+                        <i class="fa-solid fa-users"></i>
+                        <span>Community</span>
+                    </div>
+                </div>
+
+                <div class="feature-bubble fb-6">
+                    <div class="bubble-content">
+                        <i class="fa-solid fa-cookie-bite"></i>
+                        <span>Pastries</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+    
+    <section id="faq-premium" class="faq-premium-section">
+    <div class="faq-background-glow"></div>
+    
+    <div class="container faq-container-inner">
+        <div class="faq-header-wrapper reveal">
+            <span class="faq-badge">Curious Minds</span>
+            <h2 class="faq-main-title">Frequently Asked Questions</h2>
+            <p class="faq-sub-desc">Everything you need to know about our beans, space, and community.</p>
+        </div>
+
+        <div class="faq-animated-grid">
+            
+            <div class="faq-interactive-card reveal delay-1">
+                <button class="faq-trigger">
+                    <div class="faq-trigger-content">
+                        <span class="faq-number">01</span>
+                        <h3 class="faq-question-text">Is high-speed WiFi available for remote working?</h3>
+                    </div>
+                    <div class="faq-toggle-icon">
+                        <span class="line horizontal"></span>
+                        <span class="line vertical"></span>
+                    </div>
+                </button>
+                <div class="faq-expandable-content">
+                    <div class="faq-content-inner">
+                        <p>Absolutely. We provide lightning-fast, complimentary WiFi for all guests. Whether you're coding, designing, or just catching up on emails, our connection is stable and secure. Power outlets are also available under most banquette seats.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-interactive-card reveal delay-2">
+                <button class="faq-trigger">
+                    <div class="faq-trigger-content">
+                        <span class="faq-number">02</span>
+                        <h3 class="faq-question-text">Where is the best place to park?</h3>
+                    </div>
+                    <div class="faq-toggle-icon">
+                        <span class="line horizontal"></span>
+                        <span class="line vertical"></span>
+                    </div>
+                </button>
+                <div class="faq-expandable-content">
+                    <div class="faq-content-inner">
+                        <p>Cortland Ave offers street parking, but it fills up quickly during our morning rush (8 AM - 10 AM). We highly recommend parking on the adjacent residential streets like Andover or Moultrie, just a short one-block stroll to our door.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-interactive-card reveal delay-3">
+                <button class="faq-trigger">
+                    <div class="faq-trigger-content">
+                        <span class="faq-number">03</span>
+                        <h3 class="faq-question-text">Do you offer dairy-free or vegan milk alternatives?</h3>
+                    </div>
+                    <div class="faq-toggle-icon">
+                        <span class="line horizontal"></span>
+                        <span class="line vertical"></span>
+                    </div>
+                </button>
+                <div class="faq-expandable-content">
+                    <div class="faq-content-inner">
+                        <p>Yes! We carefully steam Oatly Barista Edition oat milk, Pacific Foods almond milk, and organic soy milk. We calibrate our espresso to pair perfectly with these alternatives so you never compromise on taste or texture.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-interactive-card reveal delay-4">
+                <button class="faq-trigger">
+                    <div class="faq-trigger-content">
+                        <span class="faq-number">04</span>
+                        <h3 class="faq-question-text">Can I order beans or pastries for takeaway?</h3>
+                    </div>
+                    <div class="faq-toggle-icon">
+                        <span class="line horizontal"></span>
+                        <span class="line vertical"></span>
+                    </div>
+                </button>
+                <div class="faq-expandable-content">
+                    <div class="faq-content-inner">
+                        <p>You certainly can. All our Linea Caffe retail beans, fresh mochi doughnuts, and savory wraps are available for grab-and-go. You can order ahead via our website to skip the line entirely.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<section id="reviews" class="reviews-section bg-cream">
+        <div class="container">
+            <div class="reviews-header reveal">
+                <span class="menu-badge">Community Voice</span>
+                <h2>What People are Saying</h2>
+            </div>
+
+            <div class="reviews-grid reveal delay-1">
+                <div class="review-card">
+                    <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                    <p>"The best Cortado in the city! The vibe is so inclusive and warm. A Bernal Heights gem."</p>
+                    <div class="reviewer">- Sarah J.</div>
+                </div>
+                <div class="review-card">
+                    <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                    <p>"Mochi donuts are a must-try. I love working from here on weekday mornings."</p>
+                    <div class="reviewer">- Michael T.</div>
+                </div>
+                <div class="review-card">
+                    <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i></div>
+                    <p>"Friendly staff and incredible art. It's more than just a coffee shop."</p>
+                    <div class="reviewer">- Elena R.</div>
+                </div>
+            </div>
+
+            <div class="feedback-form-container reveal">
+                <h3>Leave a Review</h3>
+                <form id="reviewForm" class="feedback-form">
+                    <div class="rating-input">
+                        <span>Your Rating:</span>
+                        <div class="star-rating">
+                            <input type="radio" name="stars" id="s5" value="5"><label for="s5"><i class="fa-solid fa-star"></i></label>
+                            <input type="radio" name="stars" id="s4" value="4"><label for="s4"><i class="fa-solid fa-star"></i></label>
+                            <input type="radio" name="stars" id="s3" value="3"><label for="s3"><i class="fa-solid fa-star"></i></label>
+                            <input type="radio" name="stars" id="s2" value="2"><label for="s2"><i class="fa-solid fa-star"></i></label>
+                            <input type="radio" name="stars" id="s1" value="1"><label for="s1"><i class="fa-solid fa-star"></i></label>
+                        </div>
+                    </div>
+                    <textarea placeholder="Tell us about your experience..." required></textarea>
+                    <button type="submit" class="btn btn-primary">Post Review</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="classic-contact-section">
+    <div class="container">
+        
+        <div class="contact-header reveal">
+            <h2>Get in Touch</h2>
+            <p>We'd love to hear from you. Drop us a line or visit us in Bernal Heights.</p>
+        </div>
+
+        <div class="classic-contact-grid reveal delay-1">
+            
+            <div class="contact-info-column">
+                
+                <div class="location-card">
+                    <div class="location-header">
+                        <i class="fa-solid fa-store"></i>
+                        <h3>Pinhole Coffee</h3>
+                    </div>
+                    <p class="address-text">231 Cortland Ave<br>San Francisco, CA 94110</p>
+                    
+                    <a href="https://maps.google.com/?q=231+Cortland+Ave,+San+Francisco,+CA+94110" target="_blank" rel="noopener noreferrer" class="btn-directions">
+                        Get Directions <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    </a>
+                </div>
+
+                <div class="direct-contact-details">
+                    <div class="detail-row">
+                        <i class="fa-solid fa-phone"></i>
+                        <div>
+                            <span class="detail-label">Phone</span>
+                            <a href="tel:+14153648257" class="detail-value">+1 415-364-8257</a>
+                        </div>
+                    </div>
+                    <div class="detail-row">
+                        <i class="fa-solid fa-envelope"></i>
+                        <div>
+                            <span class="detail-label">Email</span>
+                            <a href="mailto:hello@pinholecoffee.com" class="detail-value">hello@pinholecoffee.com</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="classic-socials">
+                    <span class="detail-label">Follow Us</span>
+                    <div class="social-links-wrapper">
+                        <a href="https://instagram.com" target="_blank" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="https://facebook.com" target="_blank" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="contact-form-column">
+                <div class="form-card">
+                    <h3>Send a Message</h3>
+                    <form id="classicForm" class="classic-form">
+                        
+                        <div class="input-wrapper">
+                            <label for="c-name">Full Name</label>
+                            <input type="text" id="c-name" required placeholder="Enter your name">
+                        </div>
+                        
+                        <div class="input-wrapper">
+                            <label for="c-email">Email Address</label>
+                            <input type="email" id="c-email" required placeholder="Enter your email">
+                        </div>
+                        
+                        <div class="input-wrapper">
+                            <label for="c-message">How can we help?</label>
+                            <textarea id="c-message" rows="5" required placeholder="Write your message here..."></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn-submit-classic">
+                            Submit Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+    <footer class="footer premium-footer">
+    <div class="container">
+        <div class="footer-top-grid">
+            
+            <div class="footer-brand">
+                <a href="index.html" class="footer-logo">Pinhole Coffee</a>
+                <p class="tagline">Crafting exceptional specialty coffee and fostering community in the heart of Bernal Heights.</p>
+                <div class="footer-socials">
+                    <a href="https://www.instagram.com/pinholecoffee" target="_blank" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://www.facebook.com/PinholeCoffee" target="_blank" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-nav">
+    <h3>Explore</h3>
+    <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="#menu">Our Menu</a></li>
+        <li><a href="#about">Our Story</a></li>
+        <li><a href="shop.html">Shop Merch</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+    </ul>
+</div>
+
+            <div class="footer-contact">
+                <h3>Visit Us</h3>
+                <ul>
+                    <li>231 Cortland Ave</li>
+                    <li>San Francisco, CA 94110</li>
+                    <li class="highlight-contact">+1 415-364-8257</li>
+                </ul>
+            </div>
+
+            <div class="footer-newsletter">
+                <h3>Stay Connected</h3>
+                <p>Join our community for the latest updates, events, and seasonal offerings.</p>
+                <form class="newsletter-form">
+                    <input type="email" placeholder="Enter your email" required>
+                    <button type="submit" aria-label="Subscribe"><i class="fa-solid fa-arrow-right"></i></button>
+                </form>
+            </div>
+
+        </div>
+
+        <div class="footer-bottom">
+            <p class="copyright">&copy; <span id="year"></span> Pinhole Coffee. All rights reserved.</p>
+            <div class="legal-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <div id="lightbox" class="lightbox">
+        <span class="lightbox-close">&times;</span>
+        <img class="lightbox-content" id="lightbox-img">
+    </div>
+
+    <script src="script.js"></script>
+
+    <button id="ai-chat-btn" class="ai-chat-btn pulse-anim">
+    <i class="fa-solid fa-comment-dots"></i>
+</button>
+
+<div id="ai-chat-window" class="ai-chat-window hidden">
+    <div class="chat-header">
+        <div class="header-info">
+            <img src="images/logo.jpeg" alt="Pinhole Logo" class="chat-logo">
+            <div>
+                <h4>Pinhole Barista</h4>
+                <span class="status">Online & Brewing</span>
+            </div>
+        </div>
+        <div class="header-btns">
+            <button id="clear-chat-btn" title="Clear Chat"><i class="fa-solid fa-rotate-right"></i></button>
+            <button id="close-chat"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+    </div>
+
+    <div id="chat-messages" class="chat-messages">
+        <div class="wa-msg-row ai-row">
+            <div class="wa-bubble ai-bubble">
+                Hi! I'm your Pinhole Assistant. ☕ Ask me about our specialty beans, mochi donuts, or where to park!
+            </div>
+        </div>
+    </div>
+
+    <div class="chat-input-area">
+        <button id="mic-btn" class="chat-tool-btn"><i class="fa-solid fa-microphone"></i></button>
+        <input type="text" id="chat-input" placeholder="Ask about our menu...">
+        <button id="send-btn" class="chat-tool-btn"><i class="fa-solid fa-paper-plane"></i></button>
+    </div>
+</div>
+</body>
+</html>

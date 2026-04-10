@@ -1,0 +1,315 @@
+/* ==========================================================================
+   ETHEREAL COFFEE DREAMS - PERFORMANCE PRO EDITION
+   Fixes: Mobile Hanging, Lightbox Freezing, and Navbar Overlap
+   ========================================================================== */
+
+:root {
+    --bg-deep: #08080C;
+    --primary-ethereal: #A78BFA;
+    --secondary-ethereal: #60A5FA;
+    --accent-shine: #FBBF24;
+    --glass-bg: rgba(255, 255, 255, 0.05);
+    --text-light: #F9FAFB;
+    --border-subtle: rgba(167, 139, 250, 0.15);
+}
+
+/* --- GLOBAL STABILITY --- */
+html, body.gallery-page {
+    background-color: var(--bg-deep);
+    color: var(--text-light);
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    /* STABILITY FIX: Stops the page from shaking horizontally */
+    overflow-x: hidden; 
+    position: relative;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* --- BACK TO CAFE BUTTON --- */
+.back-btn {
+    position: absolute !important;
+    top: 130px !important; /* Safely below the fixed Pinhole Coffee logo */
+    left: 40px !important;
+    z-index: 1000 !important;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 10px 22px;
+    border-radius: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    text-decoration: none;
+    color: #fff;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    transition: 0.3s ease;
+}
+
+.back-btn:hover {
+    background: var(--accent-shine);
+    color: #000;
+    transform: translateX(-5px);
+}
+
+/* --- 1. HERO SLIDESHOW --- */
+.gallery-hero {
+    height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-slideshow {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+}
+
+.hero-slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    background-size: cover;
+    background-position: center;
+    animation: slideShowSequence 24s linear infinite;
+    will-change: opacity, transform;
+}
+
+@keyframes slideShowSequence {
+    0% { opacity: 0; transform: scale(1); }
+    5%, 25% { opacity: 1; transform: scale(1.05); }
+    30%, 100% { opacity: 0; }
+}
+
+/* Static fallback colors for Hero Slides */
+.hero-slide:nth-child(1) { background-image: linear-gradient(to bottom, rgba(8,8,12,0.6), rgba(8,8,12,0.8)), url('https://images.unsplash.com/photo-1497935586351-b67a49e012bf?auto=format&fit=crop&w=1920&q=80'); animation-delay: 0s; }
+.hero-slide:nth-child(2) { background-image: linear-gradient(to bottom, rgba(8,8,12,0.6), rgba(8,8,12,0.8)), url('https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=1920&q=80'); animation-delay: 6s; }
+.hero-slide:nth-child(3) { background-image: linear-gradient(to bottom, rgba(8,8,12,0.6), rgba(8,8,12,0.8)), url('https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&w=1920&q=80'); animation-delay: 12s; }
+.hero-slide:nth-child(4) { background-image: linear-gradient(to bottom, rgba(8,8,12,0.6), rgba(8,8,12,0.8)), url('https://images.unsplash.com/photo-1511920170033-f8396924c348?auto=format&fit=crop&w=1920&q=80'); animation-delay: 18s; }
+
+.gallery-hero h1 {
+    font-size: clamp(3rem, 10vw, 6rem);
+    font-family: 'Playfair Display', serif;
+    z-index: 10;
+    color: #fff;
+    text-shadow: 0 10px 40px rgba(0,0,0,0.5);
+}
+
+.gallery-hero h1 span { color: var(--accent-shine); font-style: italic; }
+
+/* --- 2. MARQUEE --- */
+.horizontal-marquee {
+    background: #0F0F14;
+    padding: 30px 0;
+    overflow: hidden;
+    position: relative;
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+.marquee-track {
+    display: flex;
+    gap: 20px;
+    width: max-content;
+    animation: scrollHorizontal 40s linear infinite;
+}
+
+@keyframes scrollHorizontal {
+    100% { transform: translateX(-50%); } 
+}
+
+.marquee-item {
+    width: 320px;
+    height: 220px;
+    border-radius: 20px;
+    overflow: hidden;
+    flex-shrink: 0;
+    border: 1px solid var(--border-subtle);
+}
+
+.marquee-item img { width: 100%; height: 100%; object-fit: cover; }
+
+/* --- 3. BUBBLE GRID --- */
+.premium-bubble-gallery { padding: 80px 0; position: relative; }
+
+.ambient-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(100px);
+    opacity: 0.2;
+    z-index: 0;
+    animation: orbFloat 20s infinite alternate;
+}
+
+.orb-1 { width: 400px; height: 400px; background: var(--primary-ethereal); top: 10%; left: -5%; }
+.orb-2 { width: 300px; height: 300px; background: var(--secondary-ethereal); bottom: 10%; right: -5%; }
+
+@keyframes orbFloat { 100% { transform: translate(50px, 50px); } }
+
+.floating-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 40px;
+    padding: 60px 20px;
+    position: relative;
+    z-index: 5;
+}
+
+.bubble-card {
+    position: relative;
+    animation: bubblePhysics 8s ease-in-out infinite alternate;
+}
+
+@keyframes bubblePhysics {
+    from { transform: translateY(0); }
+    to { transform: translateY(-20px); }
+}
+
+.bubble-inner {
+    width: 100%;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    overflow: hidden;
+    cursor: pointer;
+    border: 1px solid var(--border-subtle);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+    background: #111;
+    transition: 0.4s ease;
+}
+
+.bubble-inner:hover { transform: scale(1.05); border-color: var(--accent-shine); }
+.bubble-inner img { width: 100%; height: 100%; object-fit: cover; }
+
+.bubble-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: 0.3s;
+}
+
+.bubble-inner:hover .bubble-overlay { opacity: 1; }
+.bubble-overlay h3 { color: #fff; font-size: 1.2rem; text-align: center; padding: 10px; }
+
+/* --- 4. FILTERS --- */
+.gallery-filters {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+}
+
+.filter-btn {
+    background: transparent;
+    border: 1px solid var(--border-subtle);
+    color: #9CA3AF;
+    padding: 10px 25px;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.filter-btn.active, .filter-btn:hover {
+    background: var(--primary-ethereal);
+    color: #000;
+    border-color: var(--primary-ethereal);
+}
+
+/* --- 5. LIGHTBOX (THE HANG FIX) --- */
+.lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.98);
+    z-index: 99999; /* Highest priority */
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(10px);
+}
+
+.lightbox.active { display: flex !important; }
+
+.lightbox-img {
+    max-width: 90%;
+    max-height: 80vh;
+    object-fit: contain;
+    border-radius: 10px;
+    box-shadow: 0 0 50px rgba(0,0,0,0.5);
+}
+
+.close-lightbox {
+    position: absolute;
+    top: 30px;
+    right: 35px;
+    color: #fff;
+    font-size: 50px;
+    cursor: pointer;
+}
+
+/* ==========================================================================
+   MOBILE RESPONSIVE - STABILITY UPGRADE
+   ========================================================================== */
+@media (max-width: 768px) {
+    /* 1. Prevent vertical/horizontal shaking */
+    body.gallery-page { overflow-x: hidden !important; }
+
+    /* 2. Remove CPU-Heavy Background Orbs to stop hanging */
+    .ambient-orb { display: none !important; }
+
+    /* 3. Simplify Hero - No Scale zoom on mobile */
+    .hero-slide { 
+        animation: mobileFade 24s infinite !important; 
+        transform: none !important; 
+    }
+    @keyframes mobileFade {
+        0%, 100% { opacity: 0; }
+        10%, 25% { opacity: 1; }
+        40% { opacity: 0; }
+    }
+
+    .gallery-hero h1 { font-size: 2.8rem; }
+
+    /* Move back button lower to avoid navbar overlap */
+    .back-btn { 
+        top: 100px !important; 
+        left: 20px !important; 
+        font-size: 0.75rem; 
+        padding: 8px 15px;
+    }
+
+    /* 4. DISABLING MOVING BUBBLES ON MOBILE - This stops the crash/hang! */
+    .bubble-card { 
+        animation: none !important; 
+        transform: none !important; 
+    }
+
+    .floating-grid {
+        grid-template-columns: 1fr 1fr; /* 2 clean columns */
+        gap: 15px;
+        padding: 20px 10px;
+    }
+
+    .bubble-inner {
+        border-radius: 15px; /* Rounded squares perform better on mobile GPUs */
+        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
+
+    .marquee-item { width: 260px; height: 160px; }
+
+    .close-lightbox { top: 20px; right: 20px; font-size: 40px; }
+}
+
+@media (max-width: 480px) {
+    .floating-grid { grid-template-columns: 1fr; } /* Single column for small phones */
+}
