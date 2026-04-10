@@ -292,281 +292,148 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-   document.addEventListener('DOMContentLoaded', () => {
+   /* ================= CHATBOT FIXED (WITH MEMORY) ================= */
 
-    /* ================= ALL YOUR EXISTING CODE SAME ================= */
-    /* (I DID NOT CHANGE YOUR CART, UI, FORMS, ETC) */
+const chatBtn = document.getElementById('ai-chat-btn');
+const chatWindow = document.getElementById('ai-chat-window');
+const chatInput = document.getElementById('chat-input');
+const chatMessages = document.getElementById('chat-messages');
+const sendBtn = document.getElementById('send-btn');
+const closeChatBtn = document.getElementById('close-chat');
+const clearChatBtn = document.getElementById('clear-chat-btn');
 
-    /* ========================================================================== */
-    /* 5. PINHOLE AI BARISTA (FIXED WITH BACKEND) */
-    /* ========================================================================== */
+// 1. ADD THIS: An array to remember the conversation
+let chatHistory = []; 
 
-    const chatBtn = document.getElementById('ai-chat-btn');
-    const chatWindow = document.getElementById('ai-chat-window');
-    const chatInput = document.getElementById('chat-input');
-    const chatMessages = document.getElementById('chat-messages');
-    const sendBtn = document.getElementById('send-btn');
-    const closeChatBtn = document.getElementById('close-chat');
-    const clearChatBtn = document.getElementById('clear-chat-btn');
-    const micBtn = document.getElementById('mic-btn');
-
-    if (chatBtn && chatWindow) {
-        chatBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            chatWindow.classList.remove('hidden');
-            chatBtn.classList.add('active'); 
-            if(chatInput) chatInput.focus();
-        });
-    }
-
-    if (closeChatBtn) {
-        closeChatBtn.addEventListener('click', () => {
-            chatWindow.classList.add('hidden');
-            chatBtn.classList.remove('active'); 
-        });
-    }
-
-     const SYSTEM_PROMPT = `You are the Lead Waiter and Professional Barista at Pinhole Coffee. 
-    Tone: Professional, friendly, whimsical, and community-focused. You are proud of our local Bernal Heights roots.
-
-    STRICT RULES:
-    1. ONLY answer questions about Pinhole Coffee. 
-    2. If asked about unrelated topics, politely say: "I'd love to chat about that over a coffee, but I'm here to help you with our menu and shop info!"
-    3. If a customer wants to order, tell them to click the "Add to Cart" buttons on the page.
-
-    COFFEE MENU & PRICES:
-    - Signature Cortado ($4.50): Equal parts espresso and steamed milk for a perfectly balanced flavor.
-    - Single-Origin Pour Over ($5.50): Hand-poured filter coffee highlighting bright, floral notes.
-    - Velvety Flat White ($4.75): Micro-foam poured over a double ristretto shot for a silky finish.
-    - 18-Hour Cold Brew ($5.25): Steeped slowly for a low-acid, naturally sweet, high-caffeine kick.
-    - Espresso Tonic ($6.00): A refreshing fizz of premium tonic water with a double shot of espresso.
-    - Bernal Vibe Combo ($8.50): A double espresso and a pastry of your choice.
-
-    PASTRY & SWEETS MENU:
-    - Matcha Mochi Donut ($3.75): Our famous chewy mochi donut glazed with premium Japanese matcha.
-    - Honey Glazed Donut ($3.50): Traditional mochi-style donut with a light, floral honey coating.
-    - Golden Croissant ($4.25): Flaky, buttery layers baked fresh every morning at 5 AM.
-    - Almond Frangipane ($5.00): Twice-baked croissant filled with rich almond cream and topped with flakes.
-    - Double Choco Muffin ($4.00): Rich cocoa batter packed with 70% dark chocolate chunks.
-    - Blueberry Lemon Scone ($3.95): Crumbly, buttery scone bursting with fresh blueberries and lemon zest.
-
-    SHOP DETAILS:
-    - Identity: We are a Women-owned, Asian-owned, and LGBTQ+ owned neighborhood heartbeat.
-    - Beans: Sourced exclusively from Linea Caffe.
-    - Location: 231 Cortland Ave, San Francisco (Bernal Heights).
-    - Building History: Erected in the 1880s; it was originally Max Breithaupt's butcher shop. We opened Sept 12, 2014.
-    - Pinholita: Our battery-operated cafe on wheels, currently in Ojai, CA for pop-ups and events.
-    - Parking: Recommend the residential streets like Andover or Moultrie, just one block away.
-    - Peak Hours: Busy between 8 AM – 11 AM; suggest takeaway during this time.`;
-
-    let chatHistory = [{ role: "system", content: SYSTEM_PROMPT }];
-
-    function addBubbleRow(txt, sender, isTyping = false) {
-        if(!chatMessages) return;
-        const row = document.createElement('div');
-        row.className = `wa-msg-row ${sender === 'ai' ? 'ai-row' : 'user-row'}`;
-        const bubble = document.createElement('div');
-        bubble.className = `wa-bubble ${sender === 'ai' ? 'ai-bubble' : 'user-bubble'}`;
-        
-        if (isTyping) {
-            bubble.innerHTML = `<div class="typing-dots"><span></span><span></span><span></span></div>`;
-        } else {
-            bubble.textContent = txt;
-        }
-
-        row.appendChild(bubble);
-        chatMessages.appendChild(row);
-        chatMessages.scrollTop = chatMessages.scrollHeight;
-        return row;
-    }
-
-    async function handleSend() {
-        if(!chatInput) return;
-        const text = chatInput.value.trim();
-        if(!text) return;
-        
-        addBubbleRow(text, 'user');
-        chatInput.value = '';
-        let typingRow = addBubbleRow("", 'ai', true);
-
-        try {
-            // ✅ CALL YOUR FASTAPI BACKEND
-            const res = await fetch("https://pinhole-coffee.onrender.com/", {
-                method: "POST",
-                headers: { 
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    message: text,
-                    history: chatHistory
-                })
-            });
-
-            if(typingRow) typingRow.remove();
-
-            if(!res.ok) {
-                addBubbleRow("Server error. Please try again later. ⚠️", "ai");
-                return;
-            }
-
-            const data = await res.json();
-            const reply = data.choices[0].message.content;
-
-            chatHistory.push(
-                { role: "user", content: text },
-                { role: "assistant", content: reply }
-            );
-
-            addBubbleRow(reply, 'ai');
-
-        } catch(e) {
-            if(typingRow) typingRow.remove();
-            console.error(e);
-            addBubbleRow("Backend not running or connection issue 🚨", "ai");
-        }
-    }
-
-    if(sendBtn) sendBtn.addEventListener('click', handleSend);
-
-    if(chatInput) {
-        chatInput.addEventListener('keypress', (e) => { 
-            if(e.key === 'Enter') handleSend(); 
-        });
-    }
-
-    if (clearChatBtn && chatMessages) {
-        clearChatBtn.addEventListener('click', () => {
-            chatHistory = [{ role: "system", content: SYSTEM_PROMPT }];
-            chatMessages.innerHTML = '';
-            addBubbleRow("Hi! How can I help you today? ☕", "ai");
-        });
-    }
-
-    /* ================= VOICE ================= */
-
-    if (micBtn && chatInput) {
-        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-        if (SpeechRecognition) {
-            const recognition = new SpeechRecognition();
-
-            micBtn.addEventListener('click', () => {
-                recognition.start();
-            });
-
-            recognition.onresult = (event) => {
-                chatInput.value = event.results[0][0].transcript;
-                handleSend();
-            };
-        }
-    }
-
+/* OPEN CHAT */
+if (chatBtn) chatBtn.addEventListener('click', () => {
+    chatWindow.classList.remove('hidden');
 });
 
-    async function handleSend() {
-        if(!chatInput) return;
-        const text = chatInput.value.trim();
-        if(!text) return;
-        
-        addBubbleRow(text, 'user');
-        chatInput.value = '';
-        let typingRow = addBubbleRow("", 'ai', true);
+/* CLOSE CHAT */
+if (closeChatBtn) closeChatBtn.addEventListener('click', () => {
+    chatWindow.classList.add('hidden');
+});
 
-        try {
-            // FIX: Using corsproxy to bypass strict browser blocks
-            const apiUrl = "https://api.mistral.ai/v1/chat/completions";
-            const proxyUrl = "https://corsproxy.io/?" + encodeURIComponent(apiUrl);
-
-            const res = await fetch(proxyUrl, {
-                method: "POST",
-                headers: { 
-                    "Content-Type": "application/json", 
-                    "Authorization": `Bearer ${MISTRAL_API_KEY}`
-                },
-                body: JSON.stringify({
-                    model: "mistral-small-latest",
-                    messages: [...chatHistory, {role: "user", content: text}],
-                    max_tokens: 100,    
-                    temperature: 0.7    
-                })
-            });
-
-            if(typingRow) typingRow.remove();
-
-            // FIX: Print the exact error to the user if Mistral rejects it
-            if(!res.ok) {
-                if (res.status === 401 || res.status === 402) {
-                    addBubbleRow("Error 401: Mistral blocked the key. You may need to add a billing card to your Mistral account to activate the free tier. 💳", "ai");
-                } else if (res.status === 429) {
-                    addBubbleRow("Error 429: Too many requests or out of credits! 🐢", "ai");
-                } else {
-                    addBubbleRow(`API Error Code: ${res.status}. 🛑`, "ai");
-                }
-                return;
-            }
-            
-            const data = await res.json();
-            const reply = data.choices[0].message.content;
-            
-            chatHistory.push({role: "user", content: text}, {role: "assistant", content: reply});
-            addBubbleRow(reply, 'ai');
-
-        } catch(e) {
-            if(typingRow) typingRow.remove();
-            console.error(e);
-            addBubbleRow("Browser Block (CORS). We need to move this API call to a backend server to work safely! 🛡️", "ai");
-        }
-    }
-
-    if (micBtn && chatInput) {
-        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-        if (SpeechRecognition) {
-            const recognition = new SpeechRecognition();
-            recognition.continuous = false;
-            recognition.lang = 'en-US';
-
-            micBtn.addEventListener('click', () => {
-                recognition.start();
-                micBtn.style.color = "var(--orange)"; 
-                chatInput.placeholder = "Listening...";
-            });
-
-            recognition.onresult = (event) => {
-                const transcript = event.results[0][0].transcript;
-                chatInput.value = transcript;
-                handleSend(); 
-            };
-
-            recognition.onspeechend = () => {
-                recognition.stop();
-                micBtn.style.color = "";
-                chatInput.placeholder = "Ask about our menu...";
-            };
-
-            recognition.onerror = () => {
-                micBtn.style.color = "";
-                chatInput.placeholder = "Mic error. Try typing!";
-            };
-        } else {
-            micBtn.style.display = "none"; 
-        }
-    }
-
-    if(sendBtn) sendBtn.addEventListener('click', handleSend);
+/* ADD MESSAGE */
+function addMessage(text, sender) {
+    const msg = document.createElement('div');
+    msg.className = sender === 'user' ? 'user-msg' : 'ai-msg';
     
-    // Global safety check for Enter key
-    if(chatInput) {
-        chatInput.addEventListener('keypress', (e) => { 
-            if(e.key === 'Enter') handleSend(); 
+    // Using innerHTML so Markdown (like bold text) renders nicely, 
+    // but if you prefer plain text, you can change this back to innerText
+    msg.innerHTML = text; 
+    
+    chatMessages.appendChild(msg);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+/* SEND MESSAGE */
+async function handleSend() {
+    const text = chatInput.value.trim();
+    if (!text) return;
+
+    addMessage(text, 'user');
+    chatInput.value = '';
+
+    try {
+        const res = await fetch("https://pinhole-coffee.onrender.com/chat", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            // 2. ADD THIS: We are now sending the history along with the new message
+            body: JSON.stringify({ 
+                message: text,
+                history: chatHistory 
+            })
+        });
+
+        if (!res.ok) {
+            addMessage("Server error ⚠️", "ai");
+            return;
+        }
+
+        const data = await res.json();
+        const aiMessage = data.choices?.[0]?.message?.content || "Sorry, my brain is brewing! Try again in a moment.";
+        
+        addMessage(aiMessage, "ai");
+
+        // 3. ADD THIS: Save both messages to the history array for the next time
+        chatHistory.push({ role: "user", content: text });
+        chatHistory.push({ role: "assistant", content: aiMessage });
+
+    } catch (err) {
+        console.error(err);
+        addMessage("Backend not working 🚨", "ai");
+    }
+}
+
+/* BUTTON CLICK */
+if (sendBtn) sendBtn.addEventListener('click', handleSend);
+
+/* ENTER KEY */
+if (chatInput) chatInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') handleSend();
+});
+
+/* CLEAR CHAT */
+if (clearChatBtn) clearChatBtn.addEventListener('click', () => {
+    chatMessages.innerHTML = '';
+    chatHistory = []; // Clear the memory too!
+});
+
+/* ================= MICROPHONE (SPEECH TO TEXT) ================= */
+const micBtn = document.getElementById('mic-btn');
+
+// Check if the browser supports speech recognition (Chrome, Safari, Edge)
+const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+if (SpeechRecognition) {
+    const recognition = new SpeechRecognition();
+    recognition.continuous = false; // Stops listening when you stop talking
+    recognition.interimResults = false;
+    
+    // When the user clicks the mic button
+    if (micBtn) {
+        micBtn.addEventListener('click', () => {
+            micBtn.style.color = 'red'; // Turn the mic icon red so the user knows it's listening
+            recognition.start();
         });
     }
 
-    if (clearChatBtn && chatMessages) {
-        clearChatBtn.addEventListener('click', () => {
-            chatHistory = [{ role: "system", content: SYSTEM_PROMPT }];
-            chatMessages.innerHTML = '';
-            addBubbleRow("Hi! I'm the Pinhole Assistant. How can I help you today? ☕", "ai");
-        });
-    }
+    // When the browser successfully translates the voice to text
+    recognition.onresult = (event) => {
+        const transcript = event.results[0][0].transcript;
+        
+        // Put the spoken words into the chat input box
+        const chatInput = document.getElementById('chat-input');
+        if (chatInput) {
+            chatInput.value = transcript;
+        }
+        
+        micBtn.style.color = ''; // Change the mic color back to normal
+        
+        // THIS IS THE FIX: Automatically send the message to the bot
+        handleSend(); 
+    };
+
+    // If there is an error (like user denying microphone permissions)
+    recognition.onerror = (event) => {
+        console.error("Microphone error: ", event.error);
+        micBtn.style.color = '';
+    };
+
+    // When it finishes listening
+    recognition.onend = () => {
+        micBtn.style.color = '';
+    };
+
+} else {
+    // If the user's browser is very old and doesn't support voice typing
+    if (micBtn) micBtn.style.display = 'none';
+    console.log("Speech Recognition not supported in this browser.");
+}
 
     // Updated Lightbox Logic
 const lightbox = document.getElementById('lightbox');
@@ -582,10 +449,14 @@ cards.forEach(card => {
     }
 });
 
-document.querySelector('.close-lightbox').onclick = () => {
-    lightbox.classList.remove('active');
-    document.body.classList.remove('modal-open'); // Restarts background animations
-    document.body.style.overflow = 'auto';
-};
+const closeLightboxBtn = document.querySelector('.close-lightbox');
+
+if (closeLightboxBtn) {
+    closeLightboxBtn.onclick = () => {
+        lightbox.classList.remove('active');
+        document.body.classList.remove('modal-open');
+        document.body.style.overflow = 'auto';
+    };
+}
 
 }); // End of File
